@@ -10,7 +10,7 @@ window.addEventListener('scroll', () => {
 
 // ── Hamburger menu (mobile) ────────
 const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('navLinks');
+const navLinks = document.getElementById('navLinks');
 
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('open');
@@ -27,7 +27,7 @@ navLinks.querySelectorAll('.nav-link').forEach(link => {
 
 // ── Active nav link on scroll ──────
 const sections = document.querySelectorAll('section[id]');
-const linkIds  = { home: 'link-home', about: 'link-about', services: 'link-services', contact: 'link-contact' };
+const linkIds = { home: 'link-home', about: 'link-about', services: 'link-services', contact: 'link-contact' };
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -83,7 +83,20 @@ contactForm.addEventListener('submit', (e) => {
   }, 1200);
 });
 
-// ── Smooth scroll offset for fixed nav ─
+// ── Scroll Reveal Animation ────────
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+reveals.forEach(el => revealObserver.observe(el));
+
+// ── Smooth scroll offset for fixed nav ──
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const target = document.querySelector(this.getAttribute('href'));
